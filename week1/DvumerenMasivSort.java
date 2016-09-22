@@ -13,8 +13,6 @@ public class DvumerenMasivSort {
 				newArray[i] = newArray[i] + ns[i][j];
 			}
 		}
-
-		
 		while (flag) {
 			flag = false;
 			for (int i = 0; i < newArray.length - 1; i++) {
