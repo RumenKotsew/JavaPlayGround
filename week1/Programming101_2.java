@@ -68,7 +68,6 @@ public class Programming101_2 {
 		
 		//DecodeKey съдържа най-често срещаните символи, а индексите им са цифрите, с които ще заместя тези символи
 		// в първоначалния масив, който input-вам.
-		System.out.println(decodeKey);
 		return decodeKey;
 	}
 	public static char[] decode(String inputString, char[] decodeKey) {
@@ -84,7 +83,7 @@ public class Programming101_2 {
 	}
 	public static BigInteger[] createSumArray(char[] inputArray) { 
 		
-		BigInteger sum = BigInteger.ONE;
+		BigInteger sum = BigInteger.ZERO;
 		int sumCounter = 0;
 		int forCounter = 0;
 		for (int i = 0; i < inputArray.length; i++) {
@@ -93,14 +92,15 @@ public class Programming101_2 {
 			}
 		}
 		BigInteger[] sumArray = new BigInteger[forCounter - 1];
-		System.out.println(forCounter + "forcounter");
 		
 		
 		for (int i = 0; i < inputArray.length; i++) {
 		    if (Character.isDigit(inputArray[i])) {
 		    	for (int j = i; j < inputArray.length; j++) {
 					if (Character.isDigit(inputArray[j])) {
-		    		sum = sum.multiply(BigInteger.valueOf(10)); 
+						if(i != 1) {
+							sum = sum.multiply(BigInteger.valueOf(10));
+						}
 		    		sum = sum.add(BigInteger.valueOf(Math.abs(Integer.parseInt(inputArray[j] + "")))); 
 					} else {
 						i = j;
