@@ -82,9 +82,9 @@ public class Programming101_2 {
 		}
 		return inputArray;
 	}
-	public static long[] createSumArray(char[] inputArray) { 
+	public static BigInteger[] createSumArray(char[] inputArray) { 
 		
-		long sum = 0;
+		BigInteger sum = BigInteger.ONE;
 		int sumCounter = 0;
 		int forCounter = 0;
 		for (int i = 0; i < inputArray.length; i++) {
@@ -92,22 +92,22 @@ public class Programming101_2 {
 				forCounter++;
 			}
 		}
-		long[] sumArray = new long[forCounter - 1];
+		BigInteger[] sumArray = new BigInteger[forCounter - 1];
 		System.out.println(forCounter + "forcounter");
 		
-		BigInteger afaf = new BigInteger("934245988807287881667");
 		
 		for (int i = 0; i < inputArray.length; i++) {
 		    if (Character.isDigit(inputArray[i])) {
 		    	for (int j = i; j < inputArray.length; j++) {
 					if (Character.isDigit(inputArray[j])) {
-		    		sum = 10*(sum) + Math.abs(Integer.parseInt(inputArray[j] + ""));
+		    		sum = sum.multiply(BigInteger.valueOf(10)); 
+		    		sum = sum.add(BigInteger.valueOf(Math.abs(Integer.parseInt(inputArray[j] + "")))); 
 					} else {
 						i = j;
 						j = inputArray.length;
 						sumArray[sumCounter] = sum;
 						sumCounter++;
-						sum = 0;
+						sum = BigInteger.ZERO;
 					}
 				}
 		    } 
@@ -115,10 +115,10 @@ public class Programming101_2 {
 		
 		return sumArray;
 	}
-	public static long sumEverything (long[] sumArray) {
-		long totalSum = 0;
+	public static BigInteger sumEverything (BigInteger[] sumArray) {
+		BigInteger totalSum = BigInteger.ZERO;
 		for (int i = 0; i < sumArray.length; i++) {
-			totalSum = totalSum + Math.abs(sumArray[i]);
+			totalSum = totalSum.add(sumArray[i]);
 		}
 		return totalSum;
 	}
