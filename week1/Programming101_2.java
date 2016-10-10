@@ -17,17 +17,23 @@ public class Programming101_2 {
 				forCounter++;
 			}
 		}
-		char[] rarityList = new char[forCounter]; // кореспондират една с друга чрез индексите 
-		int[] rarityListQuantity = new int[forCounter]; // например rarityList[5] е символа, който се повтаря rarityListQuantity[5] пъти в масива.
+		char[] rarityList = new char[forCounter + 1]; // кореспондират една с друга чрез индексите 
+		int[] rarityListQuantity = new int[forCounter + 1]; // например rarityList[5] е символа, който се повтаря rarityListQuantity[5] пъти в масива.
 		
 		// фор цикъл за изброяване на еднаквите поредни символи.
 		for (int i = 0; i < inputArray.length; i++) {
 			for (int j = i + 1; j < inputArray.length; j++) {
-				if (inputArray[i] == inputArray[j]) {
+				if (inputArray[i] == inputArray[j])  {
 					counter++;
-					
-		// при приключване на поредицата от еднакви записвам символа в rarityList и количеството в ~~
-		// rarityListQuantity, след което занулирам counter и увеличавам listCounter с 1, за да стигна~~
+					if (j == inputArray.length - 1) {
+						rarityList[listCounter] = inputArray[i];
+						rarityListQuantity[listCounter] = counter; // quantity corresponds to rarity with the same index
+						listCounter++;
+						counter = 1;
+						i = j;
+					}
+		// при приключване на поредицата от еднакви записвам символа в rarityList и количеството в
+		// rarityListQuantity, след което занулирам counter и увеличавам listCounter с 1, за да стигна
 		// до празно място в хистограмата.
 				} else {
 					rarityList[listCounter] = inputArray[i];
@@ -38,7 +44,7 @@ public class Programming101_2 {
 				}
 			}
 		}
-		
+		System.out.println(Arrays.toString(rarityListQuantity));
 		// сортирам quantity и rarity.
 		int temp = 0;
 		char tempChar = 0;
@@ -68,6 +74,7 @@ public class Programming101_2 {
 		
 		//DecodeKey съдържа най-често срещаните символи, а индексите им са цифрите, с които ще заместя тези символи
 		// в първоначалния масив, който input-вам.
+//		System.out.println(decodeKey);
 		return decodeKey;
 	}
 	public static char[] decode(String inputString, char[] decodeKey) {
@@ -91,17 +98,27 @@ public class Programming101_2 {
 				forCounter++;
 			}
 		}
-		BigInteger[] sumArray = new BigInteger[forCounter - 1];
+		BigInteger[] sumArray = new BigInteger[forCounter];
 		
 		
 		for (int i = 0; i < inputArray.length; i++) {
 		    if (Character.isDigit(inputArray[i])) {
 		    	for (int j = i; j < inputArray.length; j++) {
 					if (Character.isDigit(inputArray[j])) {
+						
 						if(i != 1) {
 							sum = sum.multiply(BigInteger.valueOf(10));
 						}
-		    		sum = sum.add(BigInteger.valueOf(Math.abs(Integer.parseInt(inputArray[j] + "")))); 
+						sum = sum.add(BigInteger.valueOf(Math.abs(Integer.parseInt(inputArray[j] + ""))));
+						
+						if (j == inputArray.length - 1) {
+							i = j;
+							j = inputArray.length;
+							sumArray[sumCounter] = sum;
+							sumCounter++;
+							sum = BigInteger.ZERO;
+						}
+						
 					} else {
 						i = j;
 						j = inputArray.length;
@@ -112,13 +129,14 @@ public class Programming101_2 {
 				}
 		    } 
 		}
-		
 		return sumArray;
 	}
 	public static BigInteger sumEverything (BigInteger[] sumArray) {
 		BigInteger totalSum = BigInteger.ZERO;
 		for (int i = 0; i < sumArray.length; i++) {
-			totalSum = totalSum.add(sumArray[i]);
+			if (sumArray[i] != null) {
+				totalSum = totalSum.add(sumArray[i]);
+			}		
 		}
 		return totalSum;
 	}
