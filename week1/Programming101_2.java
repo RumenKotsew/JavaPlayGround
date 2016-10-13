@@ -23,28 +23,26 @@ public class Programming101_2 {
 		// фор цикъл за изброяване на еднаквите поредни символи.
 		for (int i = 0; i < inputArray.length; i++) {
 			for (int j = i + 1; j < inputArray.length; j++) {
-				if (inputArray[i] == inputArray[j])  {
+				if (inputArray[i] == inputArray[j] && j != inputArray.length - 1)  {
 					counter++;
-					if (j == inputArray.length - 1) {
-						rarityList[listCounter] = inputArray[i];
-						rarityListQuantity[listCounter] = counter; // quantity corresponds to rarity with the same index
-						listCounter++;
-						counter = 1;
-						i = j;
-					}
+					
 		// при приключване на поредицата от еднакви записвам символа в rarityList и количеството в
 		// rarityListQuantity, след което занулирам counter и увеличавам listCounter с 1, за да стигна
 		// до празно място в хистограмата.
 				} else {
+					if (j == inputArray.length - 1) {
+						counter++;
+					}
 					rarityList[listCounter] = inputArray[i];
 					rarityListQuantity[listCounter] = counter; // quantity corresponds to rarity with the same index
 					listCounter++;
 					counter = 1;
 					i = j;
+					
 				}
 			}
 		}
-		System.out.println(Arrays.toString(rarityListQuantity));
+		
 		// сортирам quantity и rarity.
 		int temp = 0;
 		char tempChar = 0;
@@ -92,34 +90,34 @@ public class Programming101_2 {
 		
 		BigInteger sum = BigInteger.ZERO;
 		int sumCounter = 0;
-		int forCounter = 0;
+		int counter = 0;
 		for (int i = 0; i < inputArray.length; i++) {
-			if (Character.isDigit(inputArray[i]) == false) {
-				forCounter++;
+			if (Character.isDigit(inputArray[i])) {
+				for (int j = i; j < inputArray.length; j++) {
+					if (Character.isDigit(inputArray[j]) == false || j == inputArray.length - 1) {
+						counter++;
+						i = j;
+						j = inputArray.length;
+					}
+				}
 			}
 		}
-		BigInteger[] sumArray = new BigInteger[forCounter];
-		
+		BigInteger[] sumArray = new BigInteger[counter];
 		
 		for (int i = 0; i < inputArray.length; i++) {
 		    if (Character.isDigit(inputArray[i])) {
 		    	for (int j = i; j < inputArray.length; j++) {
-					if (Character.isDigit(inputArray[j])) {
-						
+					if (Character.isDigit(inputArray[j]) && j != inputArray.length - 1) {
 						if(i != 1) {
 							sum = sum.multiply(BigInteger.valueOf(10));
 						}
 						sum = sum.add(BigInteger.valueOf(Math.abs(Integer.parseInt(inputArray[j] + ""))));
 						
-						if (j == inputArray.length - 1) {
-							i = j;
-							j = inputArray.length;
-							sumArray[sumCounter] = sum;
-							sumCounter++;
-							sum = BigInteger.ZERO;
-						}
-						
 					} else {
+						if (Character.isDigit(inputArray[j]) && j == inputArray.length - 1) {
+							sum = sum.multiply(BigInteger.valueOf(10));
+							sum = sum.add(BigInteger.valueOf(Math.abs(Integer.parseInt(inputArray[j] + ""))));
+						}
 						i = j;
 						j = inputArray.length;
 						sumArray[sumCounter] = sum;
